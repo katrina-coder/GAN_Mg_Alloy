@@ -258,4 +258,37 @@ train(generator, critic, gan_model, x_t, latent_dim)
 half_batch = 1000
 x_fake, y_fake = generate_fake_samples(generator, latent_dim, half_batch)
 df_fake = pd.DataFrame(x_fake, columns=X.columns)
+
+
+
+def normalize_chemicals(df):
+
+    df[chemicals] = df[chemicals].multiply(pd.DataFrame(100/df[chemicals].sum(axis=1)).loc[:, 0], axis='index')
+
+    return df
+
+
+def normalize_categoricals(df):
+    categoricals = ['Extruded', 'ECAP', 'Cast slow', 'Cast fast', 'Cast HT', 'Wrought']
+    df_temp = df.copy()[categoricals]
+    for ind, row in df_temp.iterrows():
+        ls = [0,0,0,0,0,0]
+        ls[np.argmax(row)] = 1
+        df_temp.iloc[ind,:] = ls
+    df[categoricals] = df_temp
+    return df
+
+
+def replace_negatives(x):
+    if x < 0:
+        return 0
+    else:
+        return x
+
+    
 df_target = scaler.inverse_transform(df_fake)
+df = df_target.applymap(replace_negatives)
+df = normalize_chemicals(df)
+df = normalize_categoricals(df)
+
+
