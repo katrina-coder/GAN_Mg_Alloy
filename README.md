@@ -1,5 +1,5 @@
 # GAN_Mg_Alloy
-Generative Adversarial Networks
+Generative Adversarial Networks (GANs)
 
 
 This repository contains a GAN model trained for magnesium (Mg) alloy dataset.
