@@ -262,7 +262,12 @@ df_fake = pd.DataFrame(x_fake, columns=X.columns)
 
 
 def normalize_chemicals(df):
-
+    chemicals = 
+       [ 'Mg', 
+        'Gd', 'Al', 'Tb', 'Y', 'Sc', 'Ca', 'Zn', 
+                 'Li', 'Si', 'Dy', 'Ni', 'Sn', 'Nd', 'La', 'Er', 
+                 'Ag', 'Ga', 'Cu', 'Ce', 'Th', 'Zr', 'Yb', 'Bi', 
+                 'Sr', 'Mn', 'Pr', 'Ho', 'Sb', 'Fe', 'Be']
     df[chemicals] = df[chemicals].multiply(pd.DataFrame(100/df[chemicals].sum(axis=1)).loc[:, 0], axis='index')
 
     return df
